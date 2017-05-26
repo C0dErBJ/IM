@@ -1,0 +1,60 @@
+{
+  "fundlist": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/fundList.do?c=${c}&code=${code}&prodName=${prodName}&fundType=${fundType}&cxr3=${cxr3}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "fundsholder": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fundshold.do?c=${c}&code=${code&prodCode=${prodCode}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "industryholder": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fundihold.do?c=${c}&code=${code}&prodCode=${prodCode}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "fee": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!frate.do?c=${c}&code=${code}&prodCode=${prodCode}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "fundmanager": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fmanager.do?c=${c}&code=${code}&prodCode=${prodCode}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "notice": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!prodAnnouncement.do?c=${c}&code=${code}&prodCode=${prodCode}&page=${page}&rows=${rows}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "noticedetail": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!prodDetail.do?c=${c}&code=${code}&finfoid=${finfoid}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "hitorynet": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fundHistoryNet.do?c=${c}&code=${code}&prodCode=${prodCode}&page=${page}&rows=${rows}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+
+
+
+  "funddetail": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fundHistoryNet.do?c=${c}&code=${code}&prodCode=${prodCode}&page=${page}&rows=${rows}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "unitnet": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fundHistoryNet.do?c=${c}&code=${code}&prodCode=${prodCode}&page=${page}&rows=${rows}",
+    "method": "get",
+    "contentType": "application/json"
+  },
+  "netreturn": {
+    "url": "http://42.159.199.28:38098/finpad/financing/fundapi/dataTrend!fundHistoryNet.do?c=${c}&code=${code}&prodCode=${prodCode}&page=${page}&rows=${rows}",
+    "method": "get",
+    "contentType": "application/json"
+  }
+}
