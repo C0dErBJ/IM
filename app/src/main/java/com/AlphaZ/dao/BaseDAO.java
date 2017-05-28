@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class BaseDAO<T extends BaseDTO, K extends Serializable> extends NamedParameterJdbcDaoSupport implements org.springframework.data.repository.Repository<T, K> {
 
     @PersistenceContext()
-    protected EntityManager em;
+    public EntityManager em;
 
     @Autowired
     public void setDS(DataSource ds) {
@@ -71,6 +71,17 @@ public class BaseDAO<T extends BaseDTO, K extends Serializable> extends NamedPar
         }
         return q.getResultList();
     }
+    public List<T> findLikeFields(Class<?> clazz, Map<String, Object> map) {
+        String jql = "from " + clazz.getName() + " where 1=1 ";
+        jql = jql + this.mapToJPQLlikemode(map);
+        Query q = this.em.createQuery(jql);
+        if (map != null) {
+            for (String n : map.keySet()) {
+                q.setParameter(n, map.get(n));
+            }
+        }
+        return q.getResultList();
+    }
 
     public Object findSingleByField(Class<?> clazz, String filed, Object value) {
         if (ValideHelper.isNumericSpace(filed)) {
@@ -92,6 +103,20 @@ public class BaseDAO<T extends BaseDTO, K extends Serializable> extends NamedPar
                 if (ValideHelper.isNullOrEmpty(value.toString()))
                     continue;
                 jql = jql + " and " + key + "=:" + key + "";
+            }
+        }
+        return jql;
+    }
+    protected String mapToJPQLlikemode(Map<String, Object> map) {
+        Set<String> props = map.keySet();
+        Object value;
+        String jql = "";
+        for (String key : props) {
+            value = map.get(key);
+            if (value != null) {
+                if (ValideHelper.isNullOrEmpty(value.toString()))
+                    continue;
+                jql = jql + " or " + key + " like :" + key + "";
             }
         }
         return jql;
@@ -213,5 +238,6 @@ public class BaseDAO<T extends BaseDTO, K extends Serializable> extends NamedPar
         this.em.persist(entity);
         return entity;
     }
+
 
 }

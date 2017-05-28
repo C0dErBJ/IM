@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * Description:This is a class of com.AlphaZ.entity
  */
 @Entity
-@Table(name = "alphaz_user", catalog = "")
+@Table(name = "alphaz_user", catalog = "", schema = "alphaz")
 public class AlphazUserEntity extends BaseDTO {
     private Long id;
     private String name;//用户名
@@ -24,6 +24,11 @@ public class AlphazUserEntity extends BaseDTO {
     private Integer updateby;//数据更新人
     private Long avatar;//头像id
     private String note;//备注
+    private Integer state;
+    private String phone;
+    private String gender;
+
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,14 +40,16 @@ public class AlphazUserEntity extends BaseDTO {
         this.id = id;
     }
 
+    @Basic
     @Column(name = "avatar")
     public Long getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Long id) {
-        this.avatar = id;
+    public void setAvatar(Long avatar) {
+        this.avatar = avatar;
     }
+
     @Basic
     @Column(name = "name")
     public String getName() {
@@ -173,5 +180,35 @@ public class AlphazUserEntity extends BaseDTO {
                 ", avatar=" + avatar +
                 ", note='" + note + '\'' +
                 '}';
+    }
+
+    @Basic
+    @Column(name = "state")
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    @Basic
+    @Column(name = "phone")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Basic
+    @Column(name = "gender")
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

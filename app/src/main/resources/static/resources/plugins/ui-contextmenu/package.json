@@ -1,0 +1,134 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "ui-contextmenu",
+        "scope": null,
+        "escapedName": "ui-contextmenu",
+        "name": "ui-contextmenu",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/Jay/Desktop/a"
+    ]
+  ],
+  "_from": "ui-contextmenu@latest",
+  "_id": "ui-contextmenu@1.17.0",
+  "_inCache": true,
+  "_location": "/ui-contextmenu",
+  "_nodeVersion": "5.6.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/ui-contextmenu-1.17.0.tgz_1492416589650_0.024532162118703127"
+  },
+  "_npmUser": {
+    "name": "mar10",
+    "email": "npm@wwwendt.de"
+  },
+  "_npmVersion": "3.6.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "ui-contextmenu",
+    "scope": null,
+    "escapedName": "ui-contextmenu",
+    "name": "ui-contextmenu",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/ui-contextmenu/-/ui-contextmenu-1.17.0.tgz",
+  "_shasum": "33452c006060abf74178f8b2164dfac00ad0cf79",
+  "_shrinkwrap": null,
+  "_spec": "ui-contextmenu",
+  "_where": "/Users/Jay/Desktop/a",
+  "author": {
+    "name": "Martin Wendt",
+    "email": "jquery@wwwendt.de",
+    "url": "http://careers.stackoverflow.com/martin-wendt"
+  },
+  "bugs": {
+    "url": "https://github.com/mar10/jquery-ui-contextmenu/issues"
+  },
+  "demo": "http://wwwendt.de/tech/demo/jquery-contextmenu/demo/",
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "description": "Turn a jQuery UI Menu widget into a contextmenu.",
+  "devDependencies": {
+    "grunt": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-connect": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-qunit": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-exec": "^1.0.0",
+    "grunt-jscs": "^2.7.0",
+    "grunt-saucelabs": "^8.1.0",
+    "grunt-yabs": "^1.1.0",
+    "jquery-ui-dist": "^1.12.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "33452c006060abf74178f8b2164dfac00ad0cf79",
+    "tarball": "https://registry.npmjs.org/ui-contextmenu/-/ui-contextmenu-1.17.0.tgz"
+  },
+  "docs": "https://github.com/mar10/jquery-ui-contextmenu/blob/master/README.md",
+  "filename": "jquery.ui-contextmenu.min.js",
+  "gitHead": "aab080cc84bd7e43c9251769da568d48f738a3c9",
+  "homepage": "https://github.com/mar10/jquery-ui-contextmenu",
+  "keywords": [
+    "context-menu",
+    "contextmenu",
+    "delegate",
+    "ecosystem:jquery",
+    "jquery-plugin",
+    "jquery-ui-menu",
+    "menu",
+    "navigation",
+    "popup",
+    "right-click",
+    "right-click-menu"
+  ],
+  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.githubusercontent.com/mar10/jquery-ui-contextmenu/master/LICENSE.txt"
+    }
+  ],
+  "main": "jquery.ui-contextmenu.js",
+  "maintainers": [
+    {
+      "name": "mar10",
+      "email": "npm@wwwendt.de"
+    }
+  ],
+  "name": "ui-contextmenu",
+  "npmFileMap": [
+    {
+      "basePath": "/",
+      "files": [
+        "jquery.ui-contextmenu.js",
+        "jquery.ui-contextmenu.min.js",
+        "jquery.ui-contextmenu.min.js.map"
+      ]
+    }
+  ],
+  "npmName": "ui-contextmenu",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mar10/jquery-ui-contextmenu.git"
+  },
+  "scripts": {
+    "test": "grunt ci --verbose"
+  },
+  "title": "jQuery UI context menu plugin",
+  "version": "1.17.0"
+}

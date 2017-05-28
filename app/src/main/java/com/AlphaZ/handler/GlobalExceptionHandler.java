@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * Time: 下午2:25
  * Description:This is a class of com.AlphaZ.handler
  */
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
     public static final String DEFAULT_ERROR_VIEW = "system/500";
 

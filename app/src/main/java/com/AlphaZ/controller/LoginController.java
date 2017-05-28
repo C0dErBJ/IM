@@ -2,12 +2,17 @@ package com.AlphaZ.controller;
 
 import com.AlphaZ.constant.SessionConstant;
 import com.AlphaZ.constant.StatusCode;
+import com.AlphaZ.dao.UserDAO;
+import com.AlphaZ.entity.AlphazUserEntity;
 import com.AlphaZ.entity.api.ResponseModel;
 import com.AlphaZ.service.UserService;
+import com.AlphaZ.viewmodel.UserViewModel;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -17,15 +22,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * Created by C0dEr on 2016/12/3.
  */
 @RequestMapping("/login")
 @Controller
+@Transactional
 public class LoginController {
     @Resource
     UserService userService;
+
+    @Resource
+    UserDAO userDAO;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request, HttpSession session) {
@@ -78,9 +88,18 @@ public class LoginController {
         return model;
     }
 
-    @RequestMapping(value = "/off", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    public String logout(HttpSession session) {
+    @RequestMapping(value = "/off", method = RequestMethod.GET)
+    public ModelAndView logout(HttpSession session, @SessionAttribute(SessionConstant.CURRENTUSER) UserViewModel userViewModel) {
+        if (userViewModel != null) {
+            List<AlphazUserEntity> userEntityList = userDAO.findByField(AlphazUserEntity.class, "id", userViewModel.getUserid());
+            if (userEntityList.size() > 0) {
+                userEntityList.get(0).setState(StatusCode.FAIL);
+                userDAO.createOrUpdate(userEntityList.get(0));
+            }
+        }
         session.removeAttribute(SessionConstant.CURRENTUSER);
-        return "redirect:/";
+        return new ModelAndView("login");
     }
+
+
 }

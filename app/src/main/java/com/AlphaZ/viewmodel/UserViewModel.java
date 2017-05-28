@@ -1,8 +1,5 @@
 package com.AlphaZ.viewmodel;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * ProjectName: AlphaZ
  * PackageName: com.AlphaZ.viewmodel
@@ -12,19 +9,84 @@ import java.util.Map;
  * Description:This is a class of com.AlphaZ.viewmodel
  */
 public class UserViewModel {
+
     public Long userid;
 
-    public String name;
+    public String username;
 
     public String password;
 
+    public String newpassword;
+
     public Long avatar;
 
-    public Map<Integer, String> role;
+    public String phone;
 
-    public Map<String, List<String>> permission;
+    public String gender;
 
-    public Map<String, List<String>> menuKV;
+    public String getState() {
+        return state;
+    }
 
+    public void setState(String state) {
+        this.state = state;
+    }
 
+    public String state;
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNewpassword() {
+        return newpassword;
+    }
+
+    public void setNewpassword(String newpassword) {
+        this.newpassword = newpassword;
+    }
+
+    public Long getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Long avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }
