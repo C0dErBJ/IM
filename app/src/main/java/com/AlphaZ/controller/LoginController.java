@@ -98,7 +98,7 @@ public class LoginController {
             }
         }
         session.removeAttribute(SessionConstant.CURRENTUSER);
-        return new ModelAndView("login");
+        return new ModelAndView("redirect:/");
     }
 
 

@@ -2,8 +2,10 @@ package com.AlphaZ.controller;
 
 import com.AlphaZ.constant.SessionConstant;
 import com.AlphaZ.constant.StatusCode;
+import com.AlphaZ.dao.FriendDAO;
 import com.AlphaZ.dao.UserDAO;
 import com.AlphaZ.entity.AlphazUserEntity;
+import com.AlphaZ.entity.FriendsEntity;
 import com.AlphaZ.entity.api.ResponseModel;
 import com.AlphaZ.util.valid.ValideHelper;
 import com.AlphaZ.viewmodel.UserViewModel;
@@ -33,6 +35,8 @@ import java.util.List;
 public class RegisterController {
     @Resource
     UserDAO userDAO;
+    @Resource
+    FriendDAO friendDAO;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseModel register(@ModelAttribute UserViewModel userViewModel, HttpSession session) {
@@ -49,6 +53,10 @@ public class RegisterController {
         userEntity.setCreatetime(new Timestamp(new Date().getTime()));
         userEntity.setPhone(userViewModel.phone);
         userEntity.setGender(userViewModel.gender);
+        FriendsEntity entity = new FriendsEntity();
+        entity.setGroup("默认分组");
+        entity.setUserid(userViewModel.userid.intValue());
+        friendDAO.save(entity);
         this.userDAO.save(userEntity);
         userViewModel.userid = userEntity.getId();
         userViewModel.password = "";

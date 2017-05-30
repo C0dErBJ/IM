@@ -174,12 +174,29 @@
                     <ul class="nav nav-tabs">
                         <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="true">好友</a></li>
                         <li class=""><a href="#settings" data-toggle="tab" aria-expanded="false">我的评论</a></li>
+                        <li class=""><a href="#trend" data-toggle="tab" aria-expanded="false">动态</a></li>
                         <li class="" id="savebutten" style="float: right;
                             border-radius: 2px;
                             margin-top: 5px;
                             margin-bottom: 5px;
                             margin-right: 10px;">
                             <button class="btn btn-primary updaterole" href="javascript:;" data-toggle="tab">添加好友
+                            </button>
+                        </li>
+                        <li class="" id="groupmsg" style="float: right;
+                            border-radius: 2px;
+                            margin-top: 5px;
+                            margin-bottom: 5px;
+                            margin-right: 10px;">
+                            <button class="btn btn-primary updaterole" href="javascript:;" data-toggle="tab">加入群聊
+                            </button>
+                        </li>
+                        <li class="" id="trendpop" style="float: right;
+                            border-radius: 2px;
+                            margin-top: 5px;
+                            margin-bottom: 5px;
+                            margin-right: 10px;">
+                            <button class="btn btn-primary updaterole" href="javascript:;" data-toggle="tab">发布动态
                             </button>
                         </li>
                     </ul>
@@ -191,6 +208,9 @@
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="settings">
+
+                        </div>
+                        <div class="tab-pane" id="trend">
 
                         </div>
                     </div>
@@ -208,15 +228,11 @@
                             </button>
                         </div>
                     </div>
-                    <!-- /.box-header -->
                     <div class="box-body">
-                        <!-- Conversations are loaded here -->
                         <div class="direct-chat-messages" id="allmsg">
 
                         </div>
-                        <!--/.direct-chat-messages-->
                     </div>
-                    <!-- /.box-body -->
                     <div class="box-footer">
                         <form action="#" method="post">
                             <div class="input-group">
@@ -228,7 +244,6 @@
                             </div>
                         </form>
                     </div>
-                    <!-- /.box-footer-->
                 </div>
             </div>
 
@@ -387,7 +402,19 @@
                 </div>
             </div>
 
-
+            <div id="trendpanel" class="modal">
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="gender">发布动态</label>
+                            <textarea id="tre" class="form-control" style="max-width: 300px"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button id="trendconfirm" class="form-control btn btn-primary" type="text">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
         <!-- /.content -->
     </div>

@@ -66,7 +66,7 @@ public class MsgController {
         msg.addAll(msgDAO.findByFields(MsgEntity.class, param));
         Map<String, Object> p = new HashMap<>();
         p.put("current", user.getUserid());
-        p.put("chat", msg.stream().filter(a -> !a.getMsg().equals("好友请求")).sorted(Comparator.comparing(MsgEntity::getCreatetime)).collect(Collectors.toList()));
+        p.put("chat", msg.stream().filter(a -> !a.getType().equals("好友请求")).sorted(Comparator.comparing(MsgEntity::getCreatetime)).collect(Collectors.toList()));
         return new ResponseModel("发送成功", StatusCode.SUCCESS, p);
     }
 
@@ -78,20 +78,15 @@ public class MsgController {
         List<MsgEntity> msg = msgDAO.findByFields(MsgEntity.class, param);
         Map<String, Object> p = new HashMap<>();
         p.put("current", user.getUserid());
-        Timestamp ti = Timestamp.valueOf(time);
-        p.put("chat", msg.stream().filter(a -> !a.getMsg().equals("好友请求") && a.getIsread() == 1 && a.getCreatetime().after(ti)).sorted(Comparator.comparing(MsgEntity::getCreatetime)).collect(Collectors.toList()));
+        List<MsgEntity> msgs = msg.stream().filter(a -> !a.getType().equals("好友请求") && a.getIsread() == 1 && a.getHassend() == 1).sorted(Comparator.comparing(MsgEntity::getCreatetime)).collect(Collectors.toList());
+        p.put("chat", msgs);
+        msgs.forEach(a -> a.setHassend(0));
+        msgDAO.batchCreateOrUpdate(msgs);
         return new ResponseModel("发送成功", StatusCode.SUCCESS, p);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseModel sendMsg(MsgEntity msg, @SessionAttribute(SessionConstant.CURRENTUSER) UserViewModel user) {
-        msg.setType("聊天");
-        msg.setAvatar(user.getAvatar().intValue());
-        msg.setUsername(user.getUsername());
-        msg.setFromwho(user.userid.intValue());
-        msg.setIsread(1);
-        msg.setCreatetime(new Timestamp(new Date().getTime()));
-        this.msgDAO.save(msg);
         Map<String, Object> param = new HashMap<>();
         param.put("fromwho", msg.getTowho());
         param.put("towho", user.getUserid().intValue());
@@ -101,6 +96,14 @@ public class MsgController {
         allmsg.addAll(msgDAO.findByFields(MsgEntity.class, param));
         allmsg.forEach(a -> a.setIsread(0));
         msgDAO.batchCreateOrUpdate(allmsg);
+        msg.setType("聊天");
+        msg.setAvatar(user.getAvatar().intValue());
+        msg.setUsername(user.getUsername());
+        msg.setFromwho(user.userid.intValue());
+        msg.setIsread(1);
+        msg.setHassend(1);
+        msg.setCreatetime(new Timestamp(new Date().getTime()));
+        this.msgDAO.save(msg);
         return new ResponseModel("", 0, msg);
     }
 
@@ -123,7 +126,7 @@ public class MsgController {
 
             OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
             for (int i = 0; i < mm.size(); i++) {
-                outputStream.write(("用户：" + mm.get(i).getUsername() + "," + "消息:" + mm.get(0).getMsg()).getBytes());
+                outputStream.write(("用户：" + mm.get(i).getUsername() + "," + "消息:" + mm.get(i).getMsg()).getBytes());
                 outputStream.write("\r\n".getBytes());
             }
 

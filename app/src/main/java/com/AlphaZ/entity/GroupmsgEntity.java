@@ -7,23 +7,22 @@ import java.sql.Timestamp;
  * ProjectName: IM
  * PackageName: com.AlphaZ.entity
  * User: C0dEr
- * Date: 2017/5/26
- * Time: 下午2:15
+ * Date: 2017/5/30
+ * Time: 下午1:06
  * Description:This is a class of com.AlphaZ.entity
  */
 @Entity
-@Table(name = "msg", schema = "alphaz", catalog = "")
-public class MsgEntity extends BaseDTO{
+@Table(name = "groupmsg", schema = "alphaz", catalog = "")
+public class GroupmsgEntity extends BaseDTO {
     private Long id;
     private Integer fromwho;
     private Integer towho;
     private String msg;
-    private Timestamp createtime;
-    private Integer isread;
-    private String username;
-    private String type;
     private Integer avatar;
+    private String username;
+    private Integer isread;
     private Integer hassend;
+    private Timestamp createtime;
 
 
     @Id
@@ -68,13 +67,23 @@ public class MsgEntity extends BaseDTO{
     }
 
     @Basic
-    @Column(name = "createtime")
-    public Timestamp getCreatetime() {
-        return createtime;
+    @Column(name = "avatar")
+    public Integer getAvatar() {
+        return avatar;
     }
 
-    public void setCreatetime(Timestamp createtime) {
-        this.createtime = createtime;
+    public void setAvatar(Integer avatar) {
+        this.avatar = avatar;
+    }
+
+    @Basic
+    @Column(name = "username")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -82,13 +91,14 @@ public class MsgEntity extends BaseDTO{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MsgEntity msgEntity = (MsgEntity) o;
+        GroupmsgEntity that = (GroupmsgEntity) o;
 
-        if (id != msgEntity.id) return false;
-        if (fromwho != null ? !fromwho.equals(msgEntity.fromwho) : msgEntity.fromwho != null) return false;
-        if (towho != null ? !towho.equals(msgEntity.towho) : msgEntity.towho != null) return false;
-        if (msg != null ? !msg.equals(msgEntity.msg) : msgEntity.msg != null) return false;
-        if (createtime != null ? !createtime.equals(msgEntity.createtime) : msgEntity.createtime != null) return false;
+        if (id != that.id) return false;
+        if (fromwho != null ? !fromwho.equals(that.fromwho) : that.fromwho != null) return false;
+        if (towho != null ? !towho.equals(that.towho) : that.towho != null) return false;
+        if (msg != null ? !msg.equals(that.msg) : that.msg != null) return false;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
 
         return true;
     }
@@ -99,7 +109,8 @@ public class MsgEntity extends BaseDTO{
         result = 31 * result + (fromwho != null ? fromwho.hashCode() : 0);
         result = 31 * result + (towho != null ? towho.hashCode() : 0);
         result = 31 * result + (msg != null ? msg.hashCode() : 0);
-        result = 31 * result + (createtime != null ? createtime.hashCode() : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
     }
 
@@ -114,42 +125,22 @@ public class MsgEntity extends BaseDTO{
     }
 
     @Basic
-    @Column(name = "username")
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Basic
-    @Column(name = "type")
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Basic
-    @Column(name = "avatar")
-    public Integer getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(Integer avatar) {
-        this.avatar = avatar;
-    }
-
-    @Basic
     @Column(name = "hassend")
     public Integer getHassend() {
         return hassend;
     }
 
-    public void setHassend(Integer hasSend) {
-        this.hassend = hasSend;
+    public void setHassend(Integer hassend) {
+        this.hassend = hassend;
+    }
+
+    @Basic
+    @Column(name = "createtime")
+    public Timestamp getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Timestamp createtime) {
+        this.createtime = createtime;
     }
 }

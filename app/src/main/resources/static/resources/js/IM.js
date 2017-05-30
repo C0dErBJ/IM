@@ -15,6 +15,8 @@ var addpanel = $('#addpanel').clone();
 $('#addpanel').remove();
 var judge = $("#judgepanel").clone();
 $("#judgepanel").remove();
+var trend = $("#trendpanel").clone();
+$("#trendpanel").remove();
 $(function () {
     $.widget("moogle.contextmenu2", $.moogle.contextmenu, {});
     //region 个人信息弹窗
@@ -190,9 +192,9 @@ $(function () {
                                         type: "PUT",
                                         data: {
                                             friendid: $(ui.target[0]).find(".userid").attr("data-id"),
-                                            group: $target,
+                                            group: ui.item.text(),
                                             username: $(ui.target[0]).find(".userid").text(),
-                                            avatar: $(ui.target[0]).find("img").attr("src").split("/")[1]
+                                            avatar: $(ui.target[0]).parent(".user-block").find("img").attr("src").split("/")[1]
                                         },
                                         dataType: "json",
                                         success: function (data) {
@@ -317,8 +319,6 @@ $(function () {
     })
 
     //endregion
-
-
     //region 评论
     var j = function () {
         var html = function (jj) {
@@ -354,7 +354,74 @@ $(function () {
     }
     j();
     //endregion
+    //region 动态
+    var t = function () {
+        var html = function (jj) {
+            var h = ' <div class="post clearfix">\
+                <div class="user-block">\
+                <img class="img-circle img-bordered-sm" src="file/' + jj.avatar + '"\
+            alt="User Image">\
+                <span class="username">\
+                <a href="#">' + jj.username + '</a>\
+            </span>\
+            <span class="description">' + jj.createtime + '</span>\
+            </div>\
+            <!-- /.user-block -->\
+            <p>\
+           ' + jj.note + '\
+            </p>\
+            </div>'
+            return h;
+        }
 
+        $.ajax({
+            url: "trend",
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.statusCode == 0) {
+                    for (var i = 0; i < data.data.length; i++) {
+                        $("#trend").append(html(data.data[i]));
+                    }
+                }
+            }
+        })
+    }
+    t();
+
+    $("#trendpop").on("click", function () {
+        layer.open({
+            type: 1 //Page层类型
+            , area: ['300px', '300px']
+            , title: '动态'
+            , shade: 0.0 //遮罩透明度
+            , anim: 5 //0-6的动画形式，-1不开启
+            , content: trend.html()
+        });
+        $("#trendconfirm").on("click", function () {
+            $.ajax({
+                url: "trend",
+                type: "post",
+                data: {
+                    note: $("#tre").val()
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.statusCode == 0) {
+                        layer.msg(data.message);
+                    }
+                }
+            })
+        })
+    })
+    //endregion
+
+    //region 群聊
+
+    $("#groupmsg").on("click", function () {
+        groupchat();
+    })
+    //endregion
 })
 
 
@@ -614,7 +681,7 @@ function chat(id) {
         return ms;
     }
     $.ajax({
-        url: "/msg/user/" + id,
+        url: "msg/user/" + id,
         type: "get",
         dataType: "json",
         success: function (data) {
@@ -623,9 +690,10 @@ function chat(id) {
                 layer.open({
                     type: 1 //Page层类型
                     , area: ['300px', '400px']
-                    , title: ''
+                    , title: '聊天窗口'
                     , shade: 0.0 //遮罩透明度
                     , anim: 5 //0-6的动画形式，-1不开启
+                    , maxmin: true
                     , content: conve.html(),
                     cancel: function (index, layero) {
                         clearInterval(ii);
@@ -641,7 +709,7 @@ function chat(id) {
                 //todo
                 ii = setInterval(function () {
                     $.ajax({
-                        url: "/msg/new/" + id+"?time="+moment().format('YYYY-MM-DD HH:mm:ss'),
+                        url: "msg/new/" + id + "?time=" + moment().format('YYYY-MM-DD HH:mm:ss'),
                         type: "get",
                         dataType: "json",
                         success: function (data) {
@@ -701,6 +769,152 @@ function chat(id) {
                             case "delete":
                                 $.ajax({
                                     url: "msg/" + $(ui.target[0]).closest(".direct-chat-msg").attr("data-id"),
+                                    type: "delete",
+                                    dataType: "json",
+                                    success: function (data) {
+                                        if (data.statusCode == 0) {
+                                            $(ui.target[0]).closest(".direct-chat-msg").remove();
+                                        }
+                                    }
+                                })
+                                break
+
+                        }
+                        console.log("select " + ui.cmd + " on " + $target);
+
+                    }
+
+                })
+
+            }
+        }
+
+    })
+
+}
+
+function groupchat() {
+    var makeReciveMsg = function (msg) {
+        var recive = ' <div class="direct-chat-msg" data-id="' + msg.id + '">\
+           <div class="direct-chat-info clearfix">\
+           <span class="direct-chat-name pull-left">' + msg.username + '</span>\
+       <span class="direct-chat-timestamp pull-right">' + msg.createtime + '</span>\
+       </div>\
+       <!-- /.direct-chat-info -->\
+       <img class="direct-chat-img" src="file/' + msg.avatar + '"\
+       alt="Message User Image"><!-- /.direct-chat-img -->\
+       <div class="direct-chat-text">\
+           ' + msg.msg + '\
+           </div>\
+           <!-- /.direct-chat-text -->\
+       </div>'
+        return recive;
+    }
+    var makeSendMsg = function (msg) {
+        var ms = '<div class="direct-chat-msg right" data-id="' + msg.id + '">\
+            <div class="direct-chat-info clearfix">\
+            <span class="direct-chat-name pull-right">' + msg.username + '</span>\
+        <span class="direct-chat-timestamp pull-left">'
+            + msg.createtime +
+            '</span>\
+                    </div>\
+                    <!-- /.direct-chat-info -->\
+                    <img class="direct-chat-img" src="file/' + msg.avatar + '" alt="Message User Image"><!-- /.direct-chat-img -->\
+        <div class="direct-chat-text">\
+              ' + msg.msg + '\
+        </div>\
+        <!-- /.direct-chat-text -->\
+        </div>'
+        return ms;
+    }
+    $.ajax({
+        url: "gmsg/user",
+        type: "get",
+        dataType: "json",
+        success: function (data) {
+            if (data.statusCode == 0) {
+                var ii;
+                layer.open({
+                    type: 1 //Page层类型
+                    , area: ['300px', '400px']
+                    , title: '聊天窗口'
+                    , shade: 0.0 //遮罩透明度
+                    , anim: 5 //0-6的动画形式，-1不开启
+                    , maxmin: true
+                    , content: conve.html(),
+                    cancel: function (index, layero) {
+                        clearInterval(ii);
+                    }
+                });
+                for (var i = 0; i < data.data.chat.length; i++) {
+                    if (data.data.chat[i].fromwho == data.data.current) {
+                        $("#allmsg").append(makeSendMsg(data.data.chat[i]));
+                    } else {
+                        $("#allmsg").append(makeReciveMsg(data.data.chat[i]));
+                    }
+                }
+                //todo
+                ii = setInterval(function () {
+                    $.ajax({
+                        url: "gmsg/new?time=" + moment().format('YYYY-MM-DD HH:mm:ss'),
+                        type: "get",
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.statusCode == 0) {
+                                for (var i = 0; i < data.data.chat.length; i++) {
+                                    if (data.data.chat[i].fromwho == data.data.current) {
+                                        $("#allmsg").append(makeSendMsg(data.data.chat[i]));
+                                    } else {
+                                        $("#allmsg").append(makeReciveMsg(data.data.chat[i]));
+                                    }
+                                }
+                            }
+                        }
+
+                    })
+                }, 2000)
+                $("#sendbutton").on("click", function () {
+                    if ($("#sendmsg").val() != "") {
+                        $.ajax({
+                            url: "gmsg",
+                            type: "post",
+                            data: {
+                                msg: $("#sendmsg").val(),
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.statusCode == 0) {
+                                    $("#allmsg").append(makeSendMsg(data.data));
+                                    $("#sendmsg").val("")
+                                }
+
+                            }
+                        })
+                    }
+
+                })
+                $("#download").on("click", function () {
+                    window.open("gmsg/downlload");
+                })
+
+                $(document).contextmenu2({
+                    addClass: "llay",
+                    delegate: ".direct-chat-msg",
+                    autoFocus: true,
+                    preventContextMenuForPopup: true,
+                    preventSelect: true,
+                    taphold: true,
+                    menu: [{
+                        title: "删除消息",
+                        cmd: "delete",
+                        uiIcon: "ui-icon-scissors"
+                    }],
+                    select: function (event, ui) {
+                        var $target = ui.target;
+                        switch (ui.cmd) {
+                            case "delete":
+                                $.ajax({
+                                    url: "gmsg/" + $(ui.target[0]).closest(".direct-chat-msg").attr("data-id"),
                                     type: "delete",
                                     dataType: "json",
                                     success: function (data) {
